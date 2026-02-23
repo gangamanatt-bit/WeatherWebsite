@@ -27,11 +27,7 @@
                 Get Weather
             </button>
         </div>
-
-    </div>
-
-    <!-- Result Section -->
-    <h1>To do list</h1>
+<h1>Recent Searches</h1>
     <table class="table table-striped table-hover">
        <thead>
             <tr>
@@ -46,6 +42,10 @@
       
        </tbody>
     </table>
+    </div>
+
+    <!-- Result Section -->
+    
 <script>
   const searchKey=()=>{
      console.log(userentry.value);
@@ -60,7 +60,7 @@
          
          result.innerHTML+=`<td>${data.name}</td>
         <td>${data.main.temp} </td>
-        <td>${condn.main}</td>
+        <td>&${condn.icon};${condn.main}</td>
         <td>${data.main.humidity}</td>
         <td>${data.wind.speed}</td>`
           })
@@ -71,7 +71,7 @@
            }else{
         alert('enter a valid city')
      }
-     userenrty.value=""
+     userentry.value=""
     }
     const savedata=()=>{
           LocalStorage.setItem("data",JSON.stringify(searchKey))
