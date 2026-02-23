@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+     <div style="background-color: rgb(61, 125, 125);" class="container-fluid min-vh-100 d-flex flex-column">
+        <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+
+        <h1 style="color: rgb(7, 52, 7);" class="mb-4 text-center">
+             Weather Details
+        </h1>
+
+        <div class="d-flex w-50">
+            <input id="userentry" 
+                   type="text" 
+                   placeholder="enter the city to search"  
+                   class="form-control">
+                   
+            <button  onclick="searchKey()"
+                    class="btn btn-success ms-2">
+                Get Weather
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Result Section -->
+    <h1>To do list</h1>
+    <table class="table table-striped table-hover">
+       <thead>
+            <tr>
+                <th>City Name</th>
+                <th>Temperature(deg)</th>
+                <th>condition</th>
+                <th>Humidity</th>
+                <th>WindSpeed</th>
+            </tr>
+       </thead>
+       <tbody id="result">
+      
+       </tbody>
+    </table>
+<script>
+  const searchKey=()=>{
+     console.log(userentry.value);
+     const cityName=userentry.value
+     if(cityName){
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`).then(response=>{
+            if(response.status==200){
+        response.json().then(data=>{
+         console.log(data);
+         const condn=data.weather[0]
+         console.log(condn);
+         
+         result.innerHTML+=`<td>${data.name}</td>
+        <td>${data.main.temp} </td>
+        <td>${condn.main}</td>
+        <td>${data.main.humidity}</td>
+        <td>${data.wind.speed}</td>`
+          })
+     } else{
+            alert("Invalid city...Try with another")
+          }}).catch(reason=>{console.log(reason);
+     })
+           }else{
+        alert('enter a valid city')
+     }
+     userenrty.value=""
+    }
+    const savedata=()=>{
+          LocalStorage.setItem("data",JSON.stringify(searchKey))
+    }
+    
+</script>
+    
+</body>
